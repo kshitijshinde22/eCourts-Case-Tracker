@@ -46,6 +46,14 @@ if submitted:
                     # Optional: Save locally
                     df.to_csv(f"results/case_{case_number}_{year}.csv", index=False)
                     st.success(f"Results saved in results/case_{case_number}_{year}.csv")
+
+                    # Check for PDF link
+                    pdf_link = soup.find("a", string="Download PDF")
+                    if pdf_link and 'href' in pdf_link.attrs:
+                        pdf_url = pdf_link.attrs['href']
+                        st.markdown(f"[Download Case PDF]({pdf_url})", unsafe_allow_html=True)
+                    else:
+                        st.warning("No PDF available for this case.")
                 else:
                     st.warning("No case details found.")
             else:
